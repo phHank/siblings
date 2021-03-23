@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'graphene_django',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +43,10 @@ INSTALLED_APPS = [
     
     'django.contrib.sites',
     'django.contrib.flatpages',
+
+    'corsheaders',
+
+    'sib_catalogue',
 
     'oscar.config.Shop',
     'oscar.apps.analytics.apps.AnalyticsConfig',
@@ -87,6 +92,7 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -198,3 +204,15 @@ OSCAR_ORDER_STATUS_PIPELINE = {
 }
 
 OSCAR_DEFAULT_CURRENCY = 'MXN'
+
+GRAPHENE = {
+    "SCHEMA": "siblings.schema.schema"
+}
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3002',
+    # TODO: remove appollo graphql in production
+    'https://studio.apollographql.com'
+]
+
+CORS_ALLOW_CREDENTIALS = True
