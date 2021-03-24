@@ -35,10 +35,10 @@ class ProductType(DjangoObjectType):
 
     class Meta: 
         model = Product
-        exclude = ('meta_description', 'meta_title')
+        exclude = ('meta_description', 'meta_title', 'product_set')
 
     def resolve_images(parent, info, take=None, **kwargds):
-        return ProductImage.objects.order_by('display_order').all()[:take]
+        return ProductImage.objects.filter(product=parent).order_by('display_order').all()[:take]
 
     def resolve_in_stock(parent, info, **kwargs):
         details = strategy.fetch_for_product(parent)
