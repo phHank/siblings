@@ -8,6 +8,8 @@ from oscar.core.loading import get_model
 
 Product = get_model('catalogue', 'product')
 ProductImage = get_model('catalogue', 'productimage')
+ProductClass = get_model('catalogue', 'productclass')
+Option = get_model('catalogue', 'Option')
 
 strategy = Selector().strategy()
 
@@ -27,10 +29,16 @@ class ProductImageType(DjangoObjectType):
         exclude = ('product',)
 
 
+class ProductOptionType(DjangoObjectType):
+    class Meta:
+        model = Option
+        exclude = ('product_set',)
+
 
 class ProductType(DjangoObjectType):
     images = List(ProductImageType, take=Int())
     in_stock = Int()
+    options = List(ProductOptionType)
     price = Field(PriceType)
 
     class Meta: 
@@ -52,7 +60,9 @@ class ProductType(DjangoObjectType):
         currency = details.price.currency
     
         return PriceType(ex_tax=excl_tax, incl_tax=incl_tax, currency=currency)
-
+    
+    def resolve_options(parent, info, **kwargs):
+        return ProductClass.objects.filter(products=parent).first().options.all()
 
 class Query(ObjectType):
     products = List(ProductType)

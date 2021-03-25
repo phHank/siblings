@@ -155,3 +155,6 @@ Thumbs.db #thumbnail cache on Windows
 # local file storage
 /media
 /static
+
+#vscode
+.vscode/
