@@ -46,8 +46,6 @@ INSTALLED_APPS = [
 
     'corsheaders',
 
-    'sib_catalogue',
-
     'oscar.config.Shop',
     'oscar.apps.analytics.apps.AnalyticsConfig',
     'oscar.apps.checkout.apps.CheckoutConfig',

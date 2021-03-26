@@ -9,7 +9,7 @@ from oscar.core.loading import get_model
 Product = get_model('catalogue', 'product')
 ProductImage = get_model('catalogue', 'productimage')
 ProductClass = get_model('catalogue', 'productclass')
-Option = get_model('catalogue', 'Option')
+Option = get_model('catalogue', 'option')
 
 strategy = Selector().strategy()
 
@@ -36,17 +36,17 @@ class ProductOptionType(DjangoObjectType):
 
 
 class ProductType(DjangoObjectType):
-    images = List(ProductImageType, take=Int())
+    images = List(ProductImageType, take=Int(), skip=Int())
     in_stock = Int()
     options = List(ProductOptionType)
     price = Field(PriceType)
 
     class Meta: 
         model = Product
-        exclude = ('meta_description', 'meta_title', 'product_set')
+        exclude = ('meta_description', 'meta_title', 'product_set', 'basket_lines')
 
-    def resolve_images(parent, info, take=None, **kwargds):
-        return ProductImage.objects.filter(product=parent).order_by('display_order').all()[:take]
+    def resolve_images(parent, info, skip=0, take=None, **kwargds):
+        return ProductImage.objects.filter(product=parent).order_by('display_order').all()[skip:take]
 
     def resolve_in_stock(parent, info, **kwargs):
         details = strategy.fetch_for_product(parent)
