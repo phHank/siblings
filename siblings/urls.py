@@ -24,6 +24,6 @@ from graphene_django.views import GraphQLView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(apps.get_app_config('oscar').urls[0])),
-    path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    path('order/', include(apps.get_app_config('oscar').urls[0])),
+    path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=settings.DEBUG))),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 from oscar.defaults import *
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -202,6 +203,14 @@ OSCAR_ORDER_STATUS_PIPELINE = {
 }
 
 OSCAR_DEFAULT_CURRENCY = 'MXN'
+
+OSCAR_HOMEPAGE = reverse_lazy('basket:summary')
+
+OSCAR_SHOP_NAME = 'Siblings'
+
+OSCAR_HIDDEN_FEATURES = []
+
+OSCAR_ALLOW_ANON_REVIEWS = False
 
 GRAPHENE = {
     "SCHEMA": "siblings.schema.schema"
