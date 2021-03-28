@@ -1,4 +1,5 @@
 from django.shortcuts import get_list_or_404, get_object_or_404
+from django.db.models import Q
 
 from graphene import Field, Float, Int, List, ObjectType, String, Schema, Boolean
 from graphene_django import DjangoObjectType
@@ -65,14 +66,28 @@ class ProductType(DjangoObjectType):
         return ProductClass.objects.filter(products=parent).first().options.all()
 
 class Query(ObjectType):
-    products = List(ProductType)
+    products = List(
+        ProductType, search=String(), take=Int(), skip=Int(), order_by=String())
     product = Field(ProductType, id=Int(required=True))
 
-    def resolve_products(parent, info, **kwargs):
+    def resolve_products(
+        parent, info, search=None, take=None, skip=None, order_by='-pk', **kwargs):
         if staff_user(info):
-            return get_list_or_404(Product)
+            qs = Product.objects.order_by(order_by).all()
         
-        return get_list_or_404(Product, is_public=True)
+        else:
+            qs = Product.objects.filter(is_public=True).order_by(order_by).all()
+
+        if search: 
+            filter = (
+                Q(title__icontains=search) |
+                Q(description__icontains=search) |
+                Q(meta_title__icontains=search) |
+                Q(meta_description__icontains=search)
+            )
+            qs = qs.filter(filter)
+        
+        return qs[skip:take]
 
     def resolve_product(parent, info, id=None, **kwargs):
         if staff_user(info):

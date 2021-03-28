@@ -87,8 +87,8 @@ class AddKidItem(Mutation):
         else:
             basket = Basket()
  
-        # basket.strategy = info.context.strategy
-        # basket.add_product(product, quantity, options)
+        basket.strategy = info.context.strategy
+        basket.add_product(product, quantity, options)
 
         return AddKidItem(basket=basket)
 
