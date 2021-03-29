@@ -106,7 +106,9 @@ ROOT_URLCONF = 'siblings.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -204,7 +206,7 @@ OSCAR_ORDER_STATUS_PIPELINE = {
 
 OSCAR_DEFAULT_CURRENCY = 'MXN'
 
-OSCAR_HOMEPAGE = reverse_lazy('basket:summary')
+OSCAR_HOMEPAGE = 'http://localhost:3002/'
 
 OSCAR_SHOP_NAME = 'Siblings'
 

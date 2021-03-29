@@ -7,6 +7,8 @@ from graphene_django import DjangoObjectType
 from oscar.apps.partner.strategy import Selector
 from oscar.core.loading import get_model
 
+Category = get_model('catalogue', 'category')
+ProductCategory = get_model('catalogue', 'productcategory')
 Product = get_model('catalogue', 'product')
 ProductImage = get_model('catalogue', 'productimage')
 ProductClass = get_model('catalogue', 'productclass')
@@ -23,6 +25,15 @@ class PriceType(ObjectType):
     incl_tax = Float()
     currency = String()
 
+class CategoryType(DjangoObjectType):
+    class Meta:
+        model = Category
+        exclude=('productcategory_set',)
+
+class ProductCategoryType(DjangoObjectType):
+    class Meta:
+        model = ProductCategory
+        exclude = ('product',)
 
 class ProductImageType(DjangoObjectType):
     class Meta:
@@ -41,6 +52,7 @@ class ProductType(DjangoObjectType):
     in_stock = Int()
     options = List(ProductOptionType)
     price = Field(PriceType)
+    categories = List(ProductCategoryType)
 
     class Meta: 
         model = Product
@@ -65,13 +77,18 @@ class ProductType(DjangoObjectType):
     def resolve_options(parent, info, **kwargs):
         return ProductClass.objects.filter(products=parent).first().options.all()
 
+    def resolve_categories(parent, info, **kwargs):
+        return ProductCategory.objects.filter(product=parent).all()
+
 class Query(ObjectType):
-    products = List(
-        ProductType, search=String(), take=Int(), skip=Int(), order_by=String())
+    products = List(ProductType, search=String(), take=Int(), skip=Int(), order_by=String())
     product = Field(ProductType, id=Int(required=True))
+    
+    categories = List(CategoryType)
+    category = Field(CategoryType, name=String(required=True))
 
     def resolve_products(
-        parent, info, search=None, take=None, skip=None, order_by='-pk', **kwargs):
+        self, info, search=None, take=None, skip=None, order_by='-pk', **kwargs):
         if staff_user(info):
             qs = Product.objects.order_by(order_by).all()
         
@@ -89,12 +106,23 @@ class Query(ObjectType):
         
         return qs[skip:take]
 
-    def resolve_product(parent, info, id=None, **kwargs):
+    def resolve_product(self, info, id=None, **kwargs):
         if staff_user(info):
             return get_object_or_404(Product, pk=id)
 
         return get_object_or_404(Product, pk=id, is_public=True)
 
+    def resolve_categories(self, info, **kwargs):
+        if staff_user(info):
+            return get_list_or_404(Category)
+
+        return get_list_or_404(Category, is_public=True)
+    
+    def resolve_category(self, info, name=None, **kwargs):
+        if staff_user(info):
+            return get_object_or_404(Category, name=name)
+
+        return get_object_or_404(Category, name=name, is_public=True)
 
 
 schema = Schema(query=Query)
