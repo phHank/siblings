@@ -56,7 +56,7 @@ class ProductType(DjangoObjectType):
 
     class Meta: 
         model = Product
-        exclude = ('meta_description', 'meta_title', 'product_set', 'basket_lines')
+        exclude = ('meta_description', 'meta_title', 'product_set', 'basket_lines', 'productcategory_set')
 
     def resolve_images(parent, info, skip=0, take=None, **kwargds):
         return ProductImage.objects.filter(product=parent).order_by('display_order').all()[skip:take]

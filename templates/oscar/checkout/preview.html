@@ -1,0 +1,8 @@
+{% extends 'oscar/checkout/preview.html' %}
+{% load i18n %}
+
+<div style="display:none">
+    {% block hiddenforms %}
+        {{ stripe_token_form }}
+    {% endblock %}
+</div>
