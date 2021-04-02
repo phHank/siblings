@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 
-from graphene import Field, Int, Mutation, ObjectType, Schema, String, List
+from graphene import Boolean, Field, Int, Mutation, ObjectType, Schema, String, List
 from graphene_django import DjangoObjectType
 
 from django.contrib.auth.models import User
@@ -17,14 +17,7 @@ class LineType(DjangoObjectType):
         model = Line
         exclude = ('basket',)
 
-class OwnerType(DjangoObjectType):
-    class Meta: 
-        model = User
-        exclude = ('baskets',)
-
 class BasketType(DjangoObjectType):
-    owner = List(OwnerType)
-
     class Meta:
         model = Basket
 
@@ -33,28 +26,35 @@ class BasketType(DjangoObjectType):
 
 
 class Query(ObjectType):
-    basket = Field(BasketType, id=Int())
+    basket = Field(BasketType)
 
-    def resolve_basket(parent, info, id=None, **kwargs):
+    def resolve_basket(parent, info, **kwargs):
         user = info.context.user
         if user.is_authenticated:
-            return get_object_or_404(Basket, owner=user)
+            basket = Basket.objects.filter(owner=user).last()
+            if basket is None:
+                raise Exception('Empty Basket')
+            
+            return basket
         
-        return get_object_or_404(Basket, pk=id) 
-
+        basket_cookie = info.context.COOKIES.get('oscar_open_basket')
+        if basket_cookie is not None:
+            basket_id = basket_cookie.split(':')[0]
+            return get_object_or_404(Basket, pk=basket_id)
+        
+        raise Exception(info.context.COOKIES.get('oscar_open_basket'))
 
 
 class AddKidItem(Mutation):
     basket = Field(BasketType)
 
     class Arguments:
-        basket_id = Int()
         product_id = Int(required=True)
         quantity = Int(default_value=1)
         size_1 = String(required=True)
         size_2 = String(required=True)
 
-    def mutate(self, info, product_id=None, basket_id=None, size_1=None, size_2=None, quantity=1, **kwargs):
+    def mutate(self, info, product_id=None, size_1=None, size_2=None, quantity=1, **kwargs):
         valid_options = ('s', 'm', 'l')
 
         if (size_1.lower() not in valid_options) or (size_2.lower() not in valid_options):
@@ -76,15 +76,16 @@ class AddKidItem(Mutation):
         user = info.context.user
 
         if user.is_authenticated:
-            # Check if a basket has been assigned to the user.
-            basket = Basket.object.filter(owner=user).first()
+            basket = Basket.objects.filter(owner=user).last()
             basket = basket if basket is not None else Basket(owner=user)
 
-        elif basket_id is not None:
+        basket_cookie = info.context.COOKIES.get('oscar_open_basket')
+        if basket_cookie is not None:
+            basket_id = basket_cookie.split(':')[0]
             basket = Basket.objects.filter(pk=basket_id).first()
             basket = basket if basket is not None else Basket()
         
-        else:
+        if user.is_anonymous and basket_cookie is None:
             basket = Basket()
  
         basket.strategy = info.context.strategy

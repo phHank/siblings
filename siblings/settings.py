@@ -34,6 +34,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'webpack_loader',
+    'frontend',
     'graphene_django',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -108,6 +110,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
+            os.path.join(BASE_DIR, 'frontend/templates'),
             os.path.join(BASE_DIR, 'templates'),
         ],
         'APP_DIRS': True,
@@ -207,7 +210,7 @@ OSCAR_ORDER_STATUS_PIPELINE = {
 
 OSCAR_DEFAULT_CURRENCY = 'MXN'
 
-OSCAR_HOMEPAGE = 'http://localhost:3002/'
+OSCAR_HOMEPAGE = 'http://localhost:8000/'
 
 OSCAR_SHOP_NAME = 'Siblings'
 
@@ -219,15 +222,21 @@ GRAPHENE = {
     "SCHEMA": "siblings.schema.schema"
 }
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3002',
-    # TODO: remove appollo graphql in production
-    'https://studio.apollographql.com'
-]
+if DEBUG == True:
+    CORS_ALLOWED_ORIGINS = [
+        'http://localhost:3002',
+        'https://studio.apollographql.com'
+    ]
 
-CORS_ALLOW_CREDENTIALS = True
-
+    CORS_ALLOW_CREDENTIALS = True
 
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_TEST_SECRET')
 STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_TEST_PUBLISHABLE')
 STRIPE_CURRENCY = 'MXN'
+
+WEBPACK_LOADER = {
+  'DEFAULT': {
+    'BUNDLE_DIR_NAME': 'frontend/',
+    'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json')
+  }
+}
