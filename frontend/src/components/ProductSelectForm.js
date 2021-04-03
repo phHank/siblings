@@ -55,7 +55,7 @@ const ProductSelectForm = ({notInStock, product}) => {
 
     const handleAddItem = redirectBool => {
       if (!(formData.leftSize && formData.rightSize)) {
-        setError('Please select a size for every item!')
+        setError('Por favor seleccione talla por playera.')
         return
       }
       setRedirect(redirectBool)

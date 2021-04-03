@@ -8,16 +8,13 @@ const GET_BASKET = gql`
 query GetBasket {
     basket {
         id
-        status
         lines {
             quantity
+            priceCurrency
+            priceInclTax
             product {
                 id
                 title
-                price {
-                    currency
-                    inclTax
-                }
             }
         }
     }
@@ -34,7 +31,10 @@ const Cart = () => {
     })
 
     if (error && error !== 'Empty Basket') return (
-        <div className='position-absolute w-25 rounded bg-danger'>
+        <div 
+          className='position-absolute w-25 rounded bg-danger'
+          style={{zIndex:1}}  
+        >
             Error getting basket: {error} Refresh to try again.
         </div>
     )
@@ -54,9 +54,9 @@ const Cart = () => {
                   className='bg-secondary text-light border position-absolute w-25 rounded p-3 overflow-auto' 
                   style={{zIndex: 1}}
                 >
-                    {data && JSON.stringify(data)}
                     {loading && 'Cargando...'}
-                    {error === 'Empty Basket' && 'No hay nada en tu carrito.'}
+                    {error && 'No hay nada en tu carrito.'}
+                    {data && JSON.stringify(data)}
                 </div>
             )}
         </div>

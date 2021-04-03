@@ -31,7 +31,7 @@ class Query(ObjectType):
     def resolve_basket(parent, info, **kwargs):
         user = info.context.user
         if user.is_authenticated:
-            basket = Basket.objects.filter(owner=user).last()
+            basket = Basket.objects.filter(owner=user, status='Open').last()
             if basket is None:
                 raise Exception('Empty Basket')
             
@@ -40,9 +40,13 @@ class Query(ObjectType):
         basket_cookie = info.context.COOKIES.get('oscar_open_basket')
         if basket_cookie is not None:
             basket_id = basket_cookie.split(':')[0]
-            return get_object_or_404(Basket, pk=basket_id)
+            basket = Basket.objects.filter(pk=basket_id, status='Open').last()
+            if basket is None:
+                raise Exception('Empty Basket')
+            
+            return basket
         
-        raise Exception(info.context.COOKIES.get('oscar_open_basket'))
+        raise Exception('Empty Basket')
 
 
 class AddKidItem(Mutation):
@@ -76,13 +80,13 @@ class AddKidItem(Mutation):
         user = info.context.user
 
         if user.is_authenticated:
-            basket = Basket.objects.filter(owner=user).last()
+            basket = Basket.objects.filter(owner=user, status='Open').last()
             basket = basket if basket is not None else Basket(owner=user)
 
         basket_cookie = info.context.COOKIES.get('oscar_open_basket')
         if basket_cookie is not None:
             basket_id = basket_cookie.split(':')[0]
-            basket = Basket.objects.filter(pk=basket_id).first()
+            basket = Basket.objects.filter(pk=basket_id, status='Open').first()
             basket = basket if basket is not None else Basket()
         
         if user.is_anonymous and basket_cookie is None:

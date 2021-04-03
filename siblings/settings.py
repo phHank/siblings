@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'oscar.apps.address.apps.AddressConfig',
     'sib_apps.shipping.apps.ShippingConfig',
     #'oscar.apps.shipping.apps.ShippingConfig',
-    'oscar.apps.catalogue.apps.CatalogueConfig',
+    'sib_apps.catalogue.apps.CatalogueConfig',
+    # 'oscar.apps.catalogue.apps.CatalogueConfig',
     'oscar.apps.catalogue.reviews.apps.CatalogueReviewsConfig',
     'oscar.apps.communication.apps.CommunicationConfig',
     'oscar.apps.partner.apps.PartnerConfig',
@@ -202,10 +203,10 @@ HAYSTACK_CONNECTIONS = {
 OSCAR_INITIAL_ORDER_STATUS = 'Pending'
 OSCAR_INITIAL_LINE_STATUS = 'Pending'
 OSCAR_ORDER_STATUS_PIPELINE = {
-    'Pending': ('Being processed', 'Cancelled',),
-    'Being processed': ('Processed', 'Cancelled',),
+    'Pending': ('Completed', 'Cancelled',),
+    'Being processed': ('Completed', 'Cancelled',),
     'Cancelled': (),
-    'Processed': (),
+    'Completed': (),
 }
 
 OSCAR_DEFAULT_CURRENCY = 'MXN'

@@ -11,23 +11,20 @@ import Categories from './Categories'
 import NotFound from './NotFound'
 import Footer from './Footer'
 
-const App = () => {
-
-    return (
-        <Router>
-            <NavigationBar />
-            <div className="container d-flex flex-column align-items-center" >
-                <Switch>
-                    <Route exact path='/' children={<Home />} />
-                    <Route exact path='/products/:id' component={ProductDetail}/>
-                    <Route exact path='/search' component={Search} />
-                    <Route exact path='/category/:categories' component={Categories} />
-                    <Route children={<NotFound />} />
-                </Switch>
-                <Footer />
-            </div>
-        </Router>
-    )
-}
+const App = () => (
+    <Router>
+        <NavigationBar />
+        <div className="container d-flex flex-column align-items-center" >
+            <Switch>
+                <Route exact path='/' children={<Home />} />
+                <Route exact path='/products/:id' component={ProductDetail}/>
+                <Route exact path='/search' component={Search} />
+                <Route exact path='/category/:categories' component={Categories} />
+                <Route children={<NotFound />} />
+            </Switch>
+            <Footer />
+        </div>
+    </Router>
+)
 
 export default App
