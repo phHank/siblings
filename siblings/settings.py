@@ -60,7 +60,8 @@ INSTALLED_APPS = [
     'oscar.apps.catalogue.reviews.apps.CatalogueReviewsConfig',
     'oscar.apps.communication.apps.CommunicationConfig',
     'oscar.apps.partner.apps.PartnerConfig',
-    'oscar.apps.basket.apps.BasketConfig',
+    'sib_apps.basket.apps.BasketConfig',
+    # 'oscar.apps.basket.apps.BasketConfig',
     'oscar.apps.payment.apps.PaymentConfig',
     'oscar.apps.offer.apps.OfferConfig',
     'oscar.apps.order.apps.OrderConfig',
@@ -185,6 +186,16 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Email settings
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.environ.get('SIB_DEV_EMAIL')
+EMAIL_HOST_PASSWORD = os.environ.get('SIB_DEV_APP_PW')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = os.environ.get('SIB_DEV_EMAIL')
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
@@ -211,9 +222,10 @@ OSCAR_ORDER_STATUS_PIPELINE = {
 
 OSCAR_DEFAULT_CURRENCY = 'MXN'
 
-OSCAR_HOMEPAGE = 'http://localhost:8000/'
+OSCAR_HOMEPAGE = '/'
 
 OSCAR_SHOP_NAME = 'Siblings'
+OSCAR_SHOP_TAGLINE = '| Together Makes Sense'
 
 OSCAR_HIDDEN_FEATURES = []
 

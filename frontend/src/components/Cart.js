@@ -4,13 +4,15 @@ import { useLazyQuery, gql } from '@apollo/client'
 
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 
+import CartLines from './CartLines'
+
 const GET_BASKET = gql`
 query GetBasket {
     basket {
         id
         lines {
+            id
             quantity
-            priceCurrency
             priceInclTax
             product {
                 id
@@ -32,7 +34,7 @@ const Cart = () => {
 
     if (error && error !== 'Empty Basket') return (
         <div 
-          className='position-absolute w-25 rounded bg-danger'
+          className='position-absolute rounded bg-danger'
           style={{zIndex:1}}  
         >
             Error getting basket: {error} Refresh to try again.
@@ -43,7 +45,7 @@ const Cart = () => {
         <div
           onClick={() => {
             getBasket() 
-            setShow(true)
+            setShow(!show)
           }} 
           onMouseLeave={() => setShow(false)}
           className='d-flex justify-content-end'
@@ -51,12 +53,12 @@ const Cart = () => {
             <AiOutlineShoppingCart size={40} color='#EFD604'/>
             {show && (
                 <div 
-                  className='bg-secondary text-light border position-absolute w-25 rounded p-3 overflow-auto' 
+                  className=' bg-secondary text-light border position-absolute rounded p-3 overflow-auto' 
                   style={{zIndex: 1}}
                 >
                     {loading && 'Cargando...'}
                     {error && 'No hay nada en tu carrito.'}
-                    {data && JSON.stringify(data)}
+                    {data && <CartLines lines={data.basket.lines} setShow={setShow} />}
                 </div>
             )}
         </div>

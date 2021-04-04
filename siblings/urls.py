@@ -18,7 +18,6 @@ from django.urls import path, include
 from django.apps import apps
 from django.conf import settings
 from django.conf.urls.static import static
-from django.views.decorators.csrf import csrf_exempt
 
 from graphene_django.views import GraphQLView
 
@@ -26,5 +25,5 @@ urlpatterns = [
     path('', include('frontend.urls')),
     path('admin/', admin.site.urls),
     path('order/', include(apps.get_app_config('oscar').urls[0])),
-    path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=settings.DEBUG))),
+    path('graphql/', GraphQLView.as_view(graphiql=settings.DEBUG)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

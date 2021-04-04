@@ -11,21 +11,23 @@ const aStyle={color: '#FFF', textDecoration: 'none'}
 const NavigationBar = () => (
     <nav 
       className='navbar w-100' 
-      style={{backgroundColor: '#2E74B7'}} >
+      style={{backgroundColor: '#2E74B7'}} 
+    >
         
         <div className='d-flex align-items-center'>
             <NavLink to='/' className='navbar-brand mr-2'>
                 <SiblingsLogo height='2.25rem' />
             </NavLink>
             <NavDropDown aStyle={aStyle}/>
-            <NavLink to='/offerta' className='px-2' style={aStyle}>Ofertas</NavLink>
+            <NavLink to='/info/contacto' className='px-2' style={aStyle}>Contacto</NavLink>
+            <NavLink to='/info/nosotros' className='px-2' style={aStyle}>Nuestra Historia</NavLink>
         </div>
         
-        <div className='row pr-2'>
-            <Cart /> 
-            <div className='pl-2'>
+        <div className='d-flex align-items-center'>
+            <div className='p-2'>
                 <SearchForm />
             </div>
+            <Cart /> 
         </div>
         
     </nav>

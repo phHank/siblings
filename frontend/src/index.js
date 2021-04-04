@@ -7,9 +7,19 @@ import {
     ApolloProvider
 } from '@apollo/client'
 
+const getCSRF = () => {
+    const cookies = document.cookie.split(';')
+    const [csrfToken] = cookies.filter(cookie => cookie.includes('csrftoken='))
+    return csrfToken.slice(10,)
+}
+
 const client = new ApolloClient({
     uri: 'http://localhost:8000/graphql/',
-    cache: new InMemoryCache()
+    cache: new InMemoryCache(),
+    credentials: 'same-origin',
+    headers: {
+        'X-CSRFTOKEN': getCSRF()
+    }
 })
 
 import App from './components/App'
