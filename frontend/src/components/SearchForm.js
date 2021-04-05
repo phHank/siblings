@@ -42,13 +42,13 @@ const SearchForm  = () => {
             e.preventDefault()
             client.query({
                 query: SEARCH_QUERY,
-                variables: { search: searchTerm }
+                variables: { search: searchTerm.trim() }
             })
               .then(({data}) => {
                   history.push({
                       pathname: '/search',
                       searchData: {
-                        searchTerm,
+                        searchTerm: searchTerm,
                         results: data.products,
                         count: data.products.length
                       }
@@ -61,7 +61,7 @@ const SearchForm  = () => {
             <input
               type='text' 
               value={searchTerm}
-              onChange={({target}) => setSearchTerm(target.value.trim())}
+              onChange={({target}) => setSearchTerm(target.value)}
               placeholder="Buscar" 
               className='rounded' 
             />

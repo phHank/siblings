@@ -8,6 +8,7 @@ import Home from './Home'
 import ProductDetail from './ProductDetail'
 import Search from './Search'
 import Categories from './Categories'
+import Static from './Static'
 import NotFound from './NotFound'
 import Footer from './Footer'
 
@@ -20,6 +21,7 @@ const App = () => (
                 <Route exact path='/products/:id' component={ProductDetail}/>
                 <Route exact path='/search' component={Search} />
                 <Route exact path='/category/:categories' component={Categories} />
+                <Route exact path='/info/:page' component={Static} />
                 <Route children={<NotFound />} />
             </Switch>
             <Footer />

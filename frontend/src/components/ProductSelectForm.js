@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import { useMutation, gql } from '@apollo/client'
 
+import Thank from './Thank'
 import SizeGuide from './SizeGuide'
 import ProductFormOptions from './ProductFormOpions'
 
@@ -33,6 +34,7 @@ const ProductSelectForm = ({notInStock, product}) => {
     })
     const [error, setError] = useState('')
     const [redirect, setRedirect] = useState(false)
+    const [thanks, setThanks] = useState(false)
 
     const handleChange = (key, value) => {
       setFormData({
@@ -48,7 +50,9 @@ const ProductSelectForm = ({notInStock, product}) => {
         size2: formData.rightSize
       },
       onCompleted: () => {
-        if (redirect) window.location = 'http://localhost:8000/order/basket/'
+        redirect 
+        ? window.location = 'http://localhost:8000/order/basket/'
+        : setThanks(true)
     },
       onError: e => setError(e.message)
     })
@@ -60,11 +64,11 @@ const ProductSelectForm = ({notInStock, product}) => {
       }
       setRedirect(redirectBool)
       addItem()
-      // TODO: if !redirect then show appropriate success message and options: go to cart or browse other products
     }
 
     return (
         <form className='m-5' onSubmit={e => e.preventDefault()}>
+          {thanks && <Thank />}
 
           <SizeGuide />
 

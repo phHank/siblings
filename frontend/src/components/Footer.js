@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Link } from 'react-router-dom'
+
 import { 
   AiFillFacebook, 
   AiOutlineInstagram, 
@@ -15,7 +17,7 @@ const Footer = () => {
                 <li className='list-inline-item text-center'>
                   <a href='https://www.instagram.com/siblingstms' target='_blank'>
                     <span className='fa-stack fa-lg'>
-                      <AiOutlineInstagram size={30} color='#dd2afb' />
+                      <AiOutlineInstagram size={30} color='#DD2AFB' />
                       {/* <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/100px-Instagram_icon.png' /> */}
                     </span>
                   </a>
@@ -37,7 +39,11 @@ const Footer = () => {
               </ul>
           </div>
           <hr/>
-          <p className='text-muted'>Copyright &copy; Siblings 2021</p>
+          <div className='d-flex flex-row w-100 justify-content-between'>
+            <small className='text-muted'>Copyright &copy; Siblings 2021</small>
+            <Link to='/info/privacidad'>Aviso de privacidad</Link>
+            <Link to='/info/terminos'>Términos y condiciones</Link>
+          </div>
         </div>
       </footer>
     )

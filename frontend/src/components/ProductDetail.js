@@ -6,6 +6,7 @@ import { useQuery, gql } from '@apollo/client'
 
 import parser from 'html-react-parser'
 
+import ImageCarousel from './ImageCarousel'
 import DeliveryGuide from './DeliveryGuide'
 import ProductSelectForm from './ProductSelectForm'
 import ProductCol from './ProductCol'
@@ -22,9 +23,9 @@ query GetProductQuery ($id: Int!) {
             inclTax
             currency
         }
-        images {
-            id
+        images (skip: 1) {
             original
+            caption
         }
         options {
             id
@@ -46,8 +47,7 @@ query GetProductQuery ($id: Int!) {
 const ProductDetail = () => {
     const history = useHistory()
 
-    const path = history.location.pathname.split('/')
-    const productId = path[path.length -1]
+    const [,,productId] = history.location.pathname.split('/')
 
     const {data, loading, error } = useQuery(GET_PRODUCT_QUERY, {
         variables: {id: productId}
@@ -61,12 +61,10 @@ const ProductDetail = () => {
     return (
         <div>
             <div className='row'>
-                
-                <img
-                  className='col-sm' 
-                  style={{maxHeight: 560}}
-                  src={'http://localhost:8000/media/' + product.images[0].original} 
-                />
+            
+                <div className='w-50 mr-3 mt-5 col'>
+                    <ImageCarousel images={product?.images} />
+                </div>
                 
                 <div className='col-sm mt-5'>
 
@@ -80,7 +78,10 @@ const ProductDetail = () => {
 
                     <p className='text-center'>{product.rating}</p>
                     
-                    <ProductSelectForm notInStock={product.inStock < 0} product={product} />
+                    <ProductSelectForm 
+                      notInStock={product.inStock < 0} 
+                      product={product} 
+                    />
 
                     {parser(product.description.replace(/r*fafafa*/ig, '#FFF'))}
 

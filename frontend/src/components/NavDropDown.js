@@ -2,30 +2,16 @@ import React, { useState } from 'react'
 
 import { useHistory } from 'react-router-dom'
 
-import { useQuery, gql } from '@apollo/client'
-
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 
-export const GET_CATEGORIES = gql`
-query GetCategoies {
-    categories {
-        id
-        name 
-    }
-}
-`
 
-const NavDropDown = ({aStyle}) => {
+const NavDropDown = ({aStyle, categories, loading, error}) => {
     const [show, setShow] = useState(false)
 
     const history = useHistory()
 
-    const {data, loading, error } = useQuery(GET_CATEGORIES)
-
     if (loading) return <div>Loading...</div>
     if (error) return <div>Error: {error.message}</div>
-
-    const { categories } = data
 
     return (
         <div className="nav-item dropdown px-2">

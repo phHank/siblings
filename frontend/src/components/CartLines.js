@@ -19,7 +19,7 @@ const CartLines = ({lines}) => (
             </thead>
             <tbody>
                 {lines.map(line => (
-                    <tr key={line.id} className='boder-bottom'>
+                    <tr key={line.id} className='border-bottom'>
                         <td>
                             <Link 
                                 to={`/products/${line.product.id}`}
