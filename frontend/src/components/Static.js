@@ -9,6 +9,8 @@ import {
     nosotros
 } from '../static/staticsPages'
 
+import SiblingsLogo from './SiblingsLogo'
+
 const Static = () => {
     const history = useHistory()
 
@@ -21,8 +23,15 @@ const Static = () => {
         nosotros
     }
 
+    const showLogo = ['nosotros', 'contacto']
+
     return (
         <div className='p-5'>
+            {showLogo.includes(path) && (
+                <div className='w-100 d-flex justify-content-center'>
+                    <SiblingsLogo height={'10rem'} />
+                </div>
+            )}
             {options[path]}
         </div>
     )

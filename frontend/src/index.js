@@ -10,7 +10,7 @@ import {
 const getCSRF = () => {
     const cookies = document.cookie.split(';')
     const [csrfToken] = cookies.filter(cookie => cookie.includes('csrftoken='))
-    return csrfToken.slice(10,)
+    return csrfToken ? csrfToken.slice(10,) : ''
 }
 
 const client = new ApolloClient({

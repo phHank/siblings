@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const CartLines = ({lines}) => (
     <div 
       className='w-100 h-100 d-flex flex-column'>
-        <a href='http://localhost:8000/order/basket/' className='align-self-end'>
+        <a href='/order/basket/' className='align-self-end'>
             <button className='btn btn-dark'>Checkout</button>
         </a>
         <div className='border border-light w-100 my-3'/>

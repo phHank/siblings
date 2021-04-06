@@ -7,12 +7,12 @@ const SizeGuide = () => {
 
     return (
         <div
-          className='text-dark'
+          className='text-dark w-50'
           style={{cursor: 'help'}}
           onMouseOver={() => setShowGuide(true)}
           onMouseOut={() => setShowGuide(false)}
         >
-            <small>Size Guide <AiFillInfoCircle color='#EFD604' /></small>
+            <small>Guía de tallas <AiFillInfoCircle color='#EFD604' /></small>
             {showGuide && (
             <div 
               className='border rounded w-75 p-2 m-2 position-absolute bg-light'

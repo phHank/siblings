@@ -33,7 +33,7 @@ const SearchForm  = () => {
 
     const history = useHistory()
 
-    if (error) return <span>Error: {error}</span>
+    if (error) return <span>Error searching: {error}</span>
 
     return (
         <form 

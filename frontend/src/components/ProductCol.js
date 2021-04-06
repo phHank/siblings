@@ -10,7 +10,7 @@ const ProductCol = ({product}) => (
       disabled
     >
         <figure className='d-flex flex-column align-items-center'>
-            <img src={'http://localhost:8000/media/' + product.images[0].original} />
+            <img src={'/media/' + product.images[0].original} />
             <figcaption>
                 <small className='text-light font-weight-bold rounded p-3' style={{backgroundColor: '#2E74B7'}}>
                     {product.title} - {product.price.currency !== 'EUR' ? product.price.currency + ' $' : '€'} {product.price.inclTax}

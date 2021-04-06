@@ -48,7 +48,7 @@ const NavigationBar = () => {
                     Nuestra Historia
                 </NavLink>
                 <a 
-                  href={`http://localhost:8000/order/accounts/${data?.loggedIn ? '' : 'login/'}`} 
+                  href={`/order/accounts/${data?.loggedIn ? '' : 'login/'}`} 
                   stlye='px-2 nav-link'
                 >
                     <RiAccountCircleLine size={40} color='#EFD604' />

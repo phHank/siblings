@@ -12,7 +12,7 @@ const Thanks = () => (
             <Link to='/category/all' className='btn btn-info'>
                 Seguir comprando
             </Link>
-            <a href='http://localhost:8000/order/basket/' className='btn btn-primary'>
+            <a href='/order/basket/' className='btn btn-primary'>
                 Visita tu carrito
             </a>
         </div>

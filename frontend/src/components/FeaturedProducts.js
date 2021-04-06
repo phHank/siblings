@@ -27,7 +27,7 @@ const FeaturedProducts = () => {
     const {data, loading, error} = useQuery(GET_PRODUCTS_QUERY)
 
     if (loading) return <div>Loading...</div>
-    if (error) return <div>There has been an accident</div>
+    if (error) return <div>Error getting products: {error.message}</div>
 
     const { products } = data 
 

@@ -18,7 +18,6 @@ const Footer = () => {
                   <a href='https://www.instagram.com/siblingstms' target='_blank'>
                     <span className='fa-stack fa-lg'>
                       <AiOutlineInstagram size={30} color='#DD2AFB' />
-                      {/* <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/100px-Instagram_icon.png' /> */}
                     </span>
                   </a>
                 </li>

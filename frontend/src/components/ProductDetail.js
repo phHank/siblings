@@ -54,7 +54,7 @@ const ProductDetail = () => {
     })
 
     if (loading) return <div>Loading...</div>
-    if (error) return <div>There has been a murder!</div>
+    if (error) return <div>Error getting product info: {error.message}</div>
  
     const {product} = data
 

@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 
-from graphene import Boolean, Field, Int, Mutation, ObjectType, Schema, String, List
+from graphene import Boolean, Field, Int, Mutation, ObjectType, Schema, String
 from graphene_django import DjangoObjectType
 
 from django.contrib.auth.models import User
@@ -49,7 +49,7 @@ class Query(ObjectType):
         raise Exception('Empty Basket')
 
 
-class AddKidItem(Mutation):
+class AddItem(Mutation):
     basket = Field(BasketType)
 
     class Arguments:
@@ -57,8 +57,9 @@ class AddKidItem(Mutation):
         quantity = Int(default_value=1)
         size_1 = String(required=True)
         size_2 = String(required=True)
+        size_3 = String()
 
-    def mutate(self, info, product_id=None, size_1=None, size_2=None, quantity=1, **kwargs):
+    def mutate(self, info, product_id=None, size_1=None, size_2=None, size_3=None, quantity=1, **kwargs):
         valid_options = ('s', 'm', 'l')
 
         if (size_1.lower() not in valid_options) or (size_2.lower() not in valid_options):
@@ -74,6 +75,12 @@ class AddKidItem(Mutation):
                 'value': size_2
             }
         ]
+
+        if size_3 is not None:
+            options.append({
+                'option': Option.objects.filter(code='size-3').first(),
+                'value': size_3
+            })
 
         product = get_object_or_404(Product, pk=product_id)
 
@@ -95,10 +102,10 @@ class AddKidItem(Mutation):
         basket.strategy = info.context.strategy
         basket.add_product(product, quantity, options)
 
-        return AddKidItem(basket=basket)
+        return AddItem(basket=basket)
 
 class Mutation(ObjectType):
-    add_kid_product = AddKidItem.Field()
+    add_product = AddItem.Field()
 
 
 schema = Schema(query=Query, mutation=Mutation)

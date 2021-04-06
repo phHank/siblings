@@ -48,7 +48,7 @@ const Categories = () => {
     })
 
     if (loading) return <div>Loading...</div>
-    if (error) return <div>Error...</div>
+    if (error) return <div>Error loading products: {error.message}</div>
 
     const products = ifAll ? data.products : data.category.productSet 
 

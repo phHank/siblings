@@ -11,54 +11,39 @@ const ADD_ITEM_MUTATION = gql`
     $productId: Int!
     $size1: String!
     $size2: String!
+    $size3: String
   ){
-    addKidProduct(productId: $productId size1: $size1 size2: $size2) {
+    addProduct(productId: $productId size1: $size1 size2: $size2 size3: $size3) {
       basket {
         id
-        lines {
-          quantity
-          product {
-            id
-            title
-          }
-        }
-      }    
+      }
     }
   }
 `
 
 const ProductSelectForm = ({notInStock, product}) => {
-    const [formData, setFormData] = useState({
-        leftSize: null,
-        rightSize: null
-    })
+    const [formData, setFormData] = useState([null, null, null])
     const [error, setError] = useState('')
     const [redirect, setRedirect] = useState(false)
     const [thanks, setThanks] = useState(false)
-
-    const handleChange = (key, value) => {
-      setFormData({
-        ...formData,
-        [key]: value
-      })
-    }
     
     const [addItem, {loading}] = useMutation(ADD_ITEM_MUTATION, {
       variables: {
         productId: product.id,
-        size1: formData.leftSize,
-        size2: formData.rightSize
+        size1: formData[0],
+        size2: formData[1],
+        size3: formData[2]
       },
       onCompleted: () => {
         redirect 
-        ? window.location = 'http://localhost:8000/order/basket/'
+        ? window.location = '/order/basket/'
         : setThanks(true)
     },
       onError: e => setError(e.message)
     })
 
     const handleAddItem = redirectBool => {
-      if (!(formData.leftSize && formData.rightSize)) {
+      if (formData.filter(size => size).length < product.options.length) {
         setError('Por favor seleccione talla por playera.')
         return
       }
@@ -75,7 +60,8 @@ const ProductSelectForm = ({notInStock, product}) => {
           {error && <p className='bg-danger m-2 rounded p-2 text-center'>Error: {error}</p>}
           <ProductFormOptions 
             options={product.options}
-            handleChange={handleChange}
+            formData={formData}
+            setFormData={setFormData}
             setError={setError} 
             notInStock={notInStock} 
           />
