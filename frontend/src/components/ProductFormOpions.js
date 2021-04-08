@@ -1,25 +1,44 @@
 import React from 'react'
 
-const ProductFormOptions = ({options, notInStock, setError, formData, setFormData}) => (
+const ProductFormOptions = ({options, notInStock, setError, models, setModels, sizes, setSizes}) => (
     options.map((option, i) => (
-            <div key={option.id} className='d-flex justify-content-between w-50 mb-2'>
+            <div key={option.id} className='d-flex justify-content-between w-75 mb-2'>
                 <label htmlFor={option.code} className='font-weight-bold'>
-                    {option.name}{option.required && '*'}:
+                    {option.name.slice(0,21)}{option.required && '*'}:
                 </label>
-                <select 
-                id={option.code} 
-                disabled={notInStock}
-                onChange={e => {
-                    setError('')
-                    setFormData(formData.map((size, index) => i === index ? size=e.target.value : size))
-                }}
-                defaultValue='disabled'
-                >
-                    <option disabled value='disabled'>-</option>
-                    <option>S</option>
-                    <option>M</option>
-                    <option>L</option>
-                </select>
+
+                <div>
+                    <select 
+                      id={option.code} 
+                      disabled={notInStock}
+                      onChange={e => {
+                        setError('')
+                        setModels(models.map((model, index) => i === index ? model=e.target.value : model))
+                      }}
+                      defaultValue='disabled'
+                    >
+                        <option disabled value='disabled'>-</option>
+                        <option>Niño</option>
+                        <option>Mujer</option>
+                        <option>Hombre</option>
+                    </select>
+
+                    <select 
+                      id={option.code} 
+                      onChange={e => {
+                        setError('')
+                        setSizes(sizes.map((size, index) => i === index ? size=e.target.value : size))
+                      }}
+                      defaultValue='disabled'
+                      disabled={!models[i]}
+                    >
+                        <option disabled value='disabled'>-</option>
+                        <option>S</option>
+                        <option>M</option>
+                        <option>L</option>
+                        {models[i] !== 'Niño' && <option>XL</option>}
+                    </select>
+                </div>
             </div>
         ))
 )

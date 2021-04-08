@@ -12,8 +12,15 @@ const ADD_ITEM_MUTATION = gql`
     $size1: String!
     $size2: String!
     $size3: String
+    $size4: String
   ){
-    addProduct(productId: $productId size1: $size1 size2: $size2 size3: $size3) {
+    addProduct(
+      productId: $productId 
+      size1: $size1 
+      size2: $size2 
+      size3: $size3 
+      size4: $size4
+      ) {
       basket {
         id
       }
@@ -22,7 +29,8 @@ const ADD_ITEM_MUTATION = gql`
 `
 
 const ProductSelectForm = ({notInStock, product}) => {
-    const [formData, setFormData] = useState([null, null, null])
+    const [models, setModels] = useState([null, null, null, null])
+    const [sizes, setSizes] = useState([null, null, null, null])
     const [error, setError] = useState('')
     const [redirect, setRedirect] = useState(false)
     const [thanks, setThanks] = useState(false)
@@ -30,9 +38,10 @@ const ProductSelectForm = ({notInStock, product}) => {
     const [addItem, {loading}] = useMutation(ADD_ITEM_MUTATION, {
       variables: {
         productId: product.id,
-        size1: formData[0],
-        size2: formData[1],
-        size3: formData[2]
+        size1: models[0] + ' ' + sizes[0],
+        size2: models[1] + ' ' + sizes[1],
+        size3: models[2] + ' ' + sizes[2],
+        size4: models[3] + ' ' + sizes[3],
       },
       onCompleted: () => {
         redirect 
@@ -43,7 +52,7 @@ const ProductSelectForm = ({notInStock, product}) => {
     })
 
     const handleAddItem = redirectBool => {
-      if (formData.filter(size => size).length < product.options.length) {
+      if (sizes.filter(size => size).length < product.options.length) {
         setError('Por favor seleccione talla por playera.')
         return
       }
@@ -51,21 +60,23 @@ const ProductSelectForm = ({notInStock, product}) => {
       addItem()
     }
 
+    if (thanks) return <Thank />
+
     return (
         <form className='m-5' onSubmit={e => e.preventDefault()}>
-          {thanks && <Thank />}
-
           <SizeGuide />
 
           {error && <p className='bg-danger m-2 rounded p-2 text-center'>Error: {error}</p>}
           <ProductFormOptions 
             options={product.options}
-            formData={formData}
-            setFormData={setFormData}
+            models={models}
+            setModels={setModels}
+            sizes={sizes}
+            setSizes={setSizes}
             setError={setError} 
             notInStock={notInStock} 
           />
-
+          
           <button 
             className='btn btn-block w-75 font-weight-bold' 
             disabled={notInStock || loading}
@@ -85,7 +96,7 @@ const ProductSelectForm = ({notInStock, product}) => {
           </button>
 
           <small className='text-muted'>
-            ¿Tallas para adultos? Escríbenos a siblingstms@gmail.com
+            ¿Más playeras? Escríbenos a siblingstms@gmail.com
           </small>
 
         </form>

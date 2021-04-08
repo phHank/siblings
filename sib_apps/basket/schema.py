@@ -58,9 +58,14 @@ class AddItem(Mutation):
         size_1 = String(required=True)
         size_2 = String(required=True)
         size_3 = String()
+        size_4 = String()
 
-    def mutate(self, info, product_id=None, size_1=None, size_2=None, size_3=None, quantity=1, **kwargs):
-        valid_options = ('s', 'm', 'l')
+    def mutate(self, info, product_id=None, size_1=None, size_2=None, size_3=None, size_4=None, quantity=1, **kwargs):
+        valid_options = (
+            'niño s', 'niño m', 'niño l', 
+            'mujer s', 'mujer m', 'mujer l', 'mujer xl', 
+            'hombre s', 'hombre m', 'hombre l', 'hombre xl'
+            )
 
         if (size_1.lower() not in valid_options) or (size_2.lower() not in valid_options):
             raise Exception('Invalid Option: available size options are S, M, or L.') 
@@ -82,6 +87,12 @@ class AddItem(Mutation):
                 'value': size_3
             })
 
+        if size_4 is not None:
+            options.append({
+                'option': Option.objects.filter(code='size-4').first(),
+                'value': size_4
+            })
+
         product = get_object_or_404(Product, pk=product_id)
 
         user = info.context.user
@@ -99,6 +110,8 @@ class AddItem(Mutation):
         if user.is_anonymous and basket_cookie is None:
             basket = Basket()
  
+        # expose basket to oscar.apps.basket.middleware
+        info.context.basket = basket
         basket.strategy = info.context.strategy
         basket.add_product(product, quantity, options)
 
