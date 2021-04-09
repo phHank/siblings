@@ -13,7 +13,7 @@ const ProductFormOptions = ({options, notInStock, setError, models, setModels, s
                       disabled={notInStock}
                       onChange={e => {
                         setError('')
-                        setModels(models.map((model, index) => i === index ? model=e.target.value : model))
+                        setModels(models.map((model, index) => i === index ? model=`${option.name};${e.target.value}` : model))
                       }}
                       defaultValue='disabled'
                     >

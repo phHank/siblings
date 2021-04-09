@@ -61,36 +61,42 @@ class AddItem(Mutation):
         size_4 = String()
 
     def mutate(self, info, product_id=None, size_1=None, size_2=None, size_3=None, size_4=None, quantity=1, **kwargs):
+        option_1, option_2 = size_1.split(';'), size_2.split(';')
+
         valid_options = (
             'niño s', 'niño m', 'niño l', 
             'mujer s', 'mujer m', 'mujer l', 'mujer xl', 
             'hombre s', 'hombre m', 'hombre l', 'hombre xl'
             )
 
-        if (size_1.lower() not in valid_options) or (size_2.lower() not in valid_options):
-            raise Exception('Invalid Option: available size options are S, M, or L.') 
+        if (option_1[1].lower() not in valid_options) or (option_2[1].lower() not in valid_options):
+            raise Exception('Invalid Option: available size options are S, M, L, or XL.') 
 
         options = [
             {
-                'option': Option.objects.filter(code='size-1').first(),
-                'value': size_1
+                'option': Option.objects.filter(name=option_1[0]).first(),
+                'value': option_1[1]
             },
             {
-                'option': Option.objects.filter(code='size-2').first(),
-                'value': size_2
+                'option': Option.objects.filter(name=option_2[0]).first(),
+                'value': option_2[1]
             }
         ]
 
         if size_3 is not None:
+            option_3 = size_3.split(';')
+
             options.append({
-                'option': Option.objects.filter(code='size-3').first(),
-                'value': size_3
+                'option': Option.objects.filter(name=option_3[0]).first(),
+                'value': option_3[1]
             })
 
         if size_4 is not None:
+            option_4 = size_4.split(';')
+
             options.append({
-                'option': Option.objects.filter(code='size-4').first(),
-                'value': size_4
+                'option': Option.objects.filter(name=option_4[0]).first(),
+                'value': option_4[1]
             })
 
         product = get_object_or_404(Product, pk=product_id)
