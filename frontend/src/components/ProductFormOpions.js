@@ -36,7 +36,7 @@ const ProductFormOptions = ({options, notInStock, setError, models, setModels, s
                         <option>S</option>
                         <option>M</option>
                         <option>L</option>
-                        {models[i] !== 'Niño' && <option>XL</option>}
+                        {!models[i].includes('Niño') && <option>XL</option>}
                     </select>
                 </div>
             </div>

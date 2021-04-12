@@ -29,7 +29,7 @@ const ADD_ITEM_MUTATION = gql`
 `
 
 const ProductSelectForm = ({notInStock, product}) => {
-    const [models, setModels] = useState([null, null, null, null])
+    const [models, setModels] = useState(['', '', '', ''])
     const [sizes, setSizes] = useState([null, null, null, null])
     const [error, setError] = useState('')
     const [redirect, setRedirect] = useState(false)
@@ -40,8 +40,8 @@ const ProductSelectForm = ({notInStock, product}) => {
         productId: product.id,
         size1: models[0] + ' ' + sizes[0],
         size2: models[1] + ' ' + sizes[1],
-        size3: models[2] + ' ' + sizes[2],
-        size4: models[3] + ' ' + sizes[3],
+        size3: sizes[2] ? models[2] + ' ' + sizes[2] : null,
+        size4: sizes[3] ? models[3] + ' ' + sizes[3] : null,
       },
       onCompleted: () => {
         redirect 

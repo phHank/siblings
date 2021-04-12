@@ -14,7 +14,7 @@ const getCSRF = () => {
 }
 
 const client = new ApolloClient({
-    uri: 'http://localhost:8000/graphql/',
+    uri: '/graphql/',
     cache: new InMemoryCache(),
     credentials: 'same-origin',
     headers: {
