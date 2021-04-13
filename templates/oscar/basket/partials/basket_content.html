@@ -97,3 +97,17 @@
     {% include 'oscar/basket/partials/basket_totals.html' with editable=1 %}
 </div>
 {% endblock baskettotals %}
+
+{% block formactions %}
+<div class="form-group clearfix">
+    <div class="row">
+        <div class="col-sm-4 offset-sm-8">
+            {% if user.is_authenticated %}
+            <a href="{% url 'checkout:index' %}" class="btn btn-lg btn-primary btn-block">{% trans "Proceed to checkout" %}</a>
+            {% else %}
+            <a href="/order/accounts/login/?next=/order/checkout/" class="btn btn-lg btn-primary btn-block">{% trans "Proceed to checkout" %}</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock formactions %}
