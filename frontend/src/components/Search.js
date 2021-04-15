@@ -16,7 +16,7 @@ const Search = () => {
         <>
             <div className='container p-1 d-flex flex-column align-items-center justify-content-center'>
                 <SiblingsLogo height='10rem'/>
-                <h3 className='text-secondary'>Found {count} {count === 1 ? 'result' : 'results'} for "{searchTerm}":</h3>
+                <h3 className='text-secondary'>Encuentra {count} {count === 1 ? 'resultado' : 'resultados'} por "{searchTerm}":</h3>
             </div>
             <div className='d-flex justify-content-center'style={{width: '125%'}}>
                 <div className='row'>

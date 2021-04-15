@@ -25,17 +25,17 @@ const SizeGuide = () => {
                 <br/>
                 <br/>
                 <span className='h-6 font-weight-bold'>Tallas Mujeres:</span>
-                <br/>- Small (44 ancho x 46 largo) 
-                <br/>- Medium (46 ancho x 48 largo) 
-                <br/>- Large (48 ancho x 52 largo)
-                <br/>- XLarge (50 ancho x 52 largo)
+                <br/>- Small (44 ancho x 55 largo) 
+                <br/>- Medium (46 ancho x 56 largo) 
+                <br/>- Large (48 ancho x 57 largo)
+                <br/>- XLarge (50 ancho x 59 largo)
                 <br/>
                 <br/>
                 <span className='h-6 font-weight-bold'>Tallas Hombres:</span>
-                <br/>- Small (48 ancho x 46 largo) 
-                <br/>- Medium (50 ancho x 48 largo) 
-                <br/>- Large (52 ancho x 52 largo)
-                <br/>- XLarge (54 ancho x 52 largo)
+                <br/>- Small (48 ancho x 62 largo) 
+                <br/>- Medium (50 ancho x 63 largo) 
+                <br/>- Large (52 ancho x 64 largo)
+                <br/>- XLarge (54 ancho x 66 largo)
                 <br/>
                 <br/>
                 <div>
