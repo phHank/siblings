@@ -17,7 +17,6 @@ query GetProductQuery ($id: Int!) {
         id
         title
         description
-        rating
         inStock
         price {
             inclTax
@@ -38,6 +37,10 @@ query GetProductQuery ($id: Int!) {
             title
             images (take: 1) {
                 original
+            }
+            price {
+                inclTax
+                currency
             }
         }
     }
@@ -76,8 +79,6 @@ const ProductDetail = () => {
                         {product.price.currency !== 'EUR' ? product.price.currency + ' $' : '€'}{product.price.inclTax}
                     </h4>
 
-                    <p className='text-center'>{product.rating}</p>
-                    
                     <ProductSelectForm 
                       notInStock={product.inStock < 0} 
                       product={product} 
@@ -89,12 +90,12 @@ const ProductDetail = () => {
             </div>
 
             {product.recommendedProducts.length > 0 && (
-                <>
-                    <h5>Otros productos que te pueden interesar:</h5>
+                <div className='mt-5'>
+                    <h6>Otros productos que te pueden interesar:</h6>
                     <div className='row'>
                         {product?.recommendedProducts.slice(0,3).map(product => <ProductCol key={product.id} product={product} />)}
                     </div>
-                </>
+                </div>
             )}
 
         </div>

@@ -12,7 +12,7 @@ const ProductCol = ({product}) => (
         <figure className='d-flex flex-column align-items-center'>
             <img src={'/media/' + product.images[0].original} />
             <figcaption>
-                <small className='text-light font-weight-bold rounded p-3' style={{backgroundColor: '#2E74B7'}}>
+                <small className='text-light font-weight-bold rounded p-3' style={{backgroundColor: '#4D2D66'}}>
                     {product.title} - {product.price.currency !== 'EUR' ? product.price.currency + ' $' : '€'} {product.price.inclTax}
                 </small>
             </figcaption>

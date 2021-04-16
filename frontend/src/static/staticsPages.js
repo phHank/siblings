@@ -79,12 +79,7 @@ export const nosotros = (
         </h3>
         <p className='h6 pb-3 text-center'>¡Bienvenido a SIBLINGS! Una línea de ropa infantil, inspirada en hermanos.</p>
         <p>
-        Nuestra marca tiene la misión de mostrar individualidad entre imágenes, pero unión como concepto. Porque creemos que entre hermanos cada niño es único, pero siempre estarán unidos.  
-        </p>
-        <br/>
-        <br/>
-        <p className='text-right'>
-            <small>Pagos con tarjeta de crédito, débito, y American Express</small>
+            Nuestra marca tiene la misión de mostrar individualidad entre imágenes, pero unión como concepto. Porque creemos que entre hermanos cada niño es único, pero siempre estarán unidos.  
         </p>
     </div>
 )

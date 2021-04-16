@@ -28,11 +28,11 @@ const NavigationBar = () => {
     return (
         <nav 
         className='navbar w-100' 
-        style={{backgroundColor: '#2E74B7'}} 
+        style={{backgroundColor: '#4D2D66'}} 
       >
             
-            <div className='d-flex align-items-center'>
-                <NavLink to='/' className='navbar-brand mr-2'>
+            <div className='d-flex align-items-center row'>
+                <NavLink to='/' className='navbar-brand mx-2 col-sm text-center'>
                     <SiblingsLogo height='2.25rem' />
                 </NavLink>
                 <NavDropDown 
@@ -47,19 +47,19 @@ const NavigationBar = () => {
                 <NavLink to='/info/nosotros' className='px-2' style={aStyle}>
                     Nuestra Historia
                 </NavLink>
-                <a 
-                  href={`/order/accounts/${data?.loggedIn ? '' : 'login/'}`} 
-                  stlye='px-2 nav-link'
-                >
-                    <RiAccountCircleLine size={40} color='#EFD604' />
-                </a>
             </div>
             
-            <div className='d-flex align-items-center'>
+            <div className='d-flex align-items-center justify-content-between'>
                 <div className='p-2'>
                     <SearchForm />
                 </div>
                 <Cart /> 
+                <a
+                  href={`/order/accounts/${data?.loggedIn ? '' : 'login/'}`} 
+                  className='px-2 nav-link'
+                >
+                    <RiAccountCircleLine size={30} color='#FFF' />
+                </a>
             </div>
             
         </nav>

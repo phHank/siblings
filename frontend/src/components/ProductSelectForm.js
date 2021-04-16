@@ -6,6 +6,8 @@ import Thank from './Thank'
 import SizeGuide from './SizeGuide'
 import ProductFormOptions from './ProductFormOpions'
 
+import { AiFillCreditCard } from 'react-icons/ai'
+
 const ADD_ITEM_MUTATION = gql`
   mutation ADD_ITEM_MUTATION (
     $productId: Int!
@@ -78,18 +80,18 @@ const ProductSelectForm = ({notInStock, product}) => {
           />
           
           <button 
-            className='btn btn-block w-75 font-weight-bold' 
+            className='btn btn-block w-75 font-weight-bold text-light' 
             disabled={notInStock || loading}
-            style={{backgroundColor: '#95D3E9'}}
+            style={{backgroundColor: '#9A5ACB'}}
             onClick={() => handleAddItem(true)}
           >
             Comprar
           </button>
           
           <button 
-            className='btn btn-block w-75 font-weight-bold' 
+            className='btn btn-block w-75 font-weight-bold text-light' 
             disabled={notInStock || loading}
-            style={{backgroundColor: '#2E74B7'}}
+            style={{backgroundColor: '#4D2D66'}}
             onClick={() => handleAddItem(false)}
           >
             Agregar a bolsa de compra
@@ -99,6 +101,11 @@ const ProductSelectForm = ({notInStock, product}) => {
             ¿Más playeras? Escríbenos a siblingstms@gmail.com
           </small>
 
+          <p className='text-right mt-5'>
+              <small>
+                <AiFillCreditCard size={30}/> Pagos con tarjeta de crédito, débito, y American Express
+              </small>
+          </p>
         </form>
     )
 }

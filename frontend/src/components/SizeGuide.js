@@ -12,7 +12,9 @@ const SizeGuide = () => {
           onMouseOver={() => setShowGuide(true)}
           onMouseOut={() => setShowGuide(false)}
         >
-            <small>Guía de tallas <AiFillInfoCircle color='#EFD604' /></small>
+            <small className='font-weight-bold '>
+              Guía de tallas <AiFillInfoCircle color='#EFD604' size={25}/>
+            </small>
             {showGuide && (
             <div 
               className='border rounded w-75 p-2 m-2 position-absolute bg-light'

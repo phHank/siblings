@@ -50,7 +50,7 @@ const Cart = () => {
           onMouseLeave={() => setShow(false)}
           className='d-flex justify-content-end'
         >
-            <AiOutlineShoppingCart size={40} color='#EFD604'/>
+            <AiOutlineShoppingCart size={30} color='#FFF'/>
             {show && (
                 <div 
                   className=' bg-secondary text-light border position-absolute rounded p-3 overflow-auto' 
