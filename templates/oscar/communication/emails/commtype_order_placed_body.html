@@ -4,9 +4,8 @@
 {% block tbody %}
 <tr>
     <td class="content-block">
-        <p xmlns="http://www.w3.org/1999/html">{% trans 'Hello,' %}</p>
-        <p>{% blocktrans with order_number=order.number %}We are pleased to confirm your order {{ order_number }} has been received and
-        will be processed shortly.{% endblocktrans %}</p>
+        <p xmlns="http://www.w3.org/1999/html">Compra Exitosa,</p>
+        <p>Confirmamos que tu pedido número {{ order.number }} ha sido recibido y está siendo procesado por nuestro equipo.</p>
     </td>
 </tr>
 
@@ -22,17 +21,13 @@
                         <tbody>
                             {% for line in order.lines.all %}
                                 <tr>
-                                    <td>{{ line.title }} &times; {{ line.quantity }}</td>
+                                    <td>{{ line.description }} &times; {{ line.quantity }}</td>
                                     <td class="alignright">{{ line.line_price_incl_tax|currency:order.currency }}</td>
                                 </tr>
                             {% endfor %}
                             <tr>
                                 <td class="alignright">{% trans 'Basket total:' %}</td>
                                 <td class="alignright">{{ order.basket_total_incl_tax|currency:order.currency }}</td>
-                            </tr>
-                            <tr>
-                                <td class="alignright">{% trans 'Shipping:' %}</td>
-                                <td class="alignright">{{ order.shipping_incl_tax|currency:order.currency }}</td>
                             </tr>
                             <tr class="total">
                                 <td class="alignright" width="80%">{% trans 'Order Total:' %}</td>
@@ -48,18 +43,19 @@
 
 <tr>
     <td class="content-block">
-        <p>{% trans 'Shipping address:' %}</p>
+        <p>Dirección:</p>
         <p>{% for field in order.shipping_address.active_address_fields %}  {{ field }}<br/>
         {% endfor %}</p>
+        <br/>
+        <p>Para entrega a domicilio, usaremos esta dirección.</p>
+        <p>Para recoger en Tienda nos pondremos en contacto contigo pronto.</p>
     </td>
 </tr>
 
-{% if status_url %}
-    <tr>
-        <td class="content-block">
-            {% blocktrans %}You can view the status of this order by clicking <a href="{{ status_url }}" title="order status">here</a>{% endblocktrans %}
-        </td>
-    </tr>
-{% endif %}
+<tr>
+    <td class="content-block">
+        Contáctanos por email para cualquier duda, cambio o comentario.
+    </td>
+</tr>
 
 {% endblock %}

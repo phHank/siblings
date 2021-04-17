@@ -1,24 +1,21 @@
-{% load currency_filters i18n %}{% blocktrans with order_number=order.number %}Hello,
+{% load currency_filters i18n %}Compra Exitosa,
 
-We are pleased to confirm your order {{ order_number }} has been received and
-will be processed shortly.{% endblocktrans %}
+Confirmamos que tu pedido número {{ order.number }} ha sido recibido y está siendo procesado por nuestro equipo.
 
 {% trans 'Your order contains:' %}
 
-{% for line in order.lines.all %} * {{ line.title }} - {%  trans 'quantity:' %} {{ line.quantity }} - {% trans 'price:' %} {{ line.line_price_incl_tax|currency:order.currency }}
+{% for line in order.lines.all %} * {{ line.description }} - {%  trans 'quantity:' %} {{ line.quantity }} - {% trans 'price:' %} {{ line.line_price_incl_tax|currency:order.currency }}
 {% endfor %}
 {% trans 'Basket total:' %} {{ order.basket_total_incl_tax|currency:order.currency }}
-{% trans 'Shipping:' %} {{ order.shipping_incl_tax|currency:order.currency }}
 {% trans 'Order Total:' %} {{ order.total_incl_tax|currency:order.currency }}
 
-{% trans 'Shipping address:' %}
+{% trans 'Dirección:' %}
 
 {% for field in order.shipping_address.active_address_fields %}  {{ field }}
+Para entrega a domicilio, usaremos esta dirección.
+Para recoger en Tienda nos pondremos en contacto contigo pronto.
 {% endfor %}
 
-{% if status_url %}
-{% blocktrans %}You can view the status of this order at the below URL:
-{{ status_url }}{% endblocktrans %}
-{% endif %}
+Contáctanos por email para cualquier duda, cambio o comentario.
 
 {% blocktrans %}The team{% endblocktrans %}

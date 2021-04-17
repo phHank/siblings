@@ -231,6 +231,8 @@ OSCAR_HIDDEN_FEATURES = []
 
 OSCAR_ALLOW_ANON_REVIEWS = False
 
+LOGIN_REDIRECT_URL = '/order/accounts/'
+
 GRAPHENE = {
     "SCHEMA": "siblings.schema.schema"
 }

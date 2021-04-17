@@ -57,7 +57,7 @@ export const contacto = (
         <p>
             <small>TELÉFONO Y WHATSAPP</small>
             <br/>
-            (52) 5548584556
+            5548584556
             <br/>
             <br/>
             <small>CORREO ELECTRÓNICO</small>
