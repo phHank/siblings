@@ -12,17 +12,17 @@
         </div>
     {% endif %}
 
-    <div class='bg-dark p-3'>
-        <p class='text-center font-weight-bold text-light'>
-            🎉 ¡Ya casi! Revisa los detalles de tu compra antes de dar click en Realizar Pedido 🎉
-        </p>
-        <div>
-            {% block place_order %}   
-            {% endblock place_order %}
-        </div>
-    </div>
-
     {% block order_contents %}
+        <div class='bg-dark p-3'>
+            <p class='text-center font-weight-bold text-light'>
+                🎉 ¡Ya casi! Revisa los detalles de tu compra y da click en Realizar Pedido para aceptar el cobro a tu tarjeta 🎉
+            </p>
+            <div>
+                {% block place_order %}
+                {% endblock place_order %}
+            </div>
+        </div>
+
         <div class="sub-header">
             {% block order_contents_actions %}
                 <a href="{% url 'basket:summary' %}" class="float-right">

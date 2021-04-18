@@ -61,6 +61,8 @@ const ProductDetail = () => {
  
     const {product} = data
 
+    const multiBuy = [,, 'por par', 'por tres', 'por cuatro']
+
     return (
         <div>
             <div className='row'>
@@ -77,6 +79,7 @@ const ProductDetail = () => {
 
                     <h4 className='my-3'>
                         {product.price.currency !== 'EUR' ? product.price.currency + ' $' : '€'}{product.price.inclTax}
+                        <small> {multiBuy[product.options.length]}</small>
                     </h4>
 
                     <ProductSelectForm 

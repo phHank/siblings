@@ -233,6 +233,8 @@ OSCAR_ALLOW_ANON_REVIEWS = False
 
 LOGIN_REDIRECT_URL = '/order/accounts/'
 
+LOGIN_URL = '/order/accounts/login/'
+
 GRAPHENE = {
     "SCHEMA": "siblings.schema.schema"
 }
