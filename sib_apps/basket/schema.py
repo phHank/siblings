@@ -61,16 +61,12 @@ class AddItem(Mutation):
         size_4 = String()
 
     def mutate(self, info, product_id=None, size_1=None, size_2=None, size_3=None, size_4=None, quantity=1, **kwargs):
+        valid_options = ('s', 'm', 'l', 'xl')
+
+        if (size_1[-1].lower() not in valid_options) or (size_2[-1].lower() not in valid_options):
+            raise Exception('Invalid Option: available size options are S, M, L, or XL.')
+
         option_1, option_2 = size_1.split(';'), size_2.split(';')
-
-        valid_options = (
-            'niño s', 'niño m', 'niño l', 
-            'mujer s', 'mujer m', 'mujer l', 'mujer xl', 
-            'hombre s', 'hombre m', 'hombre l', 'hombre xl'
-            )
-
-        if (option_1[1].lower() not in valid_options) or (option_2[1].lower() not in valid_options):
-            raise Exception('Invalid Option: available size options are S, M, L, or XL.') 
 
         options = [
             {

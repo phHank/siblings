@@ -18,6 +18,11 @@ query GetProductQuery ($id: Int!) {
         title
         description
         inStock
+        categories {
+            category {
+                name
+            }
+        }
         price {
             inclTax
             currency
@@ -61,6 +66,11 @@ const ProductDetail = () => {
  
     const {product} = data
 
+    const includesAdultItem = product.categories.some(({category}) => (
+        category.name.toLowerCase().includes('mamá')
+        || category.name.toLowerCase().includes('papá')
+    ))
+    
     const multiBuy = [,, 'por par', 'por tres', 'por cuatro']
 
     return (
@@ -85,9 +95,10 @@ const ProductDetail = () => {
                     <ProductSelectForm 
                       notInStock={product.inStock < 0} 
                       product={product} 
+                      includesAdult={includesAdultItem}
                     />
 
-                    {parser(product.description.replace(/r*fafafa*/ig, '#FFF'))}
+                    {parser(product.description)}
 
                 </div>
             </div>

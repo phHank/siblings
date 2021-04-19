@@ -4,6 +4,7 @@ import { useMutation, gql } from '@apollo/client'
 
 import Thank from './Thank'
 import SizeGuide from './SizeGuide'
+import ProductOptionsAdult from './ProductOptionsAdult'
 import ProductFormOptions from './ProductFormOpions'
 
 import { AiFillCreditCard } from 'react-icons/ai'
@@ -30,7 +31,7 @@ const ADD_ITEM_MUTATION = gql`
   }
 `
 
-const ProductSelectForm = ({notInStock, product}) => {
+const ProductSelectForm = ({notInStock, product, includesAdult}) => {
     const [models, setModels] = useState(['', '', '', ''])
     const [sizes, setSizes] = useState([null, null, null, null])
     const [error, setError] = useState('')
@@ -40,7 +41,7 @@ const ProductSelectForm = ({notInStock, product}) => {
     const [addItem, {loading}] = useMutation(ADD_ITEM_MUTATION, {
       variables: {
         productId: product.id,
-        size1: models[0] + ' ' + sizes[0],
+        size1: models[0] ? models[0] + ' ' + sizes[0] : 'Adulto;Adulto' + ' ' + sizes[0],
         size2: models[1] + ' ' + sizes[1],
         size3: sizes[2] ? models[2] + ' ' + sizes[2] : null,
         size4: sizes[3] ? models[3] + ' ' + sizes[3] : null,
@@ -69,15 +70,26 @@ const ProductSelectForm = ({notInStock, product}) => {
           <SizeGuide />
 
           {error && <p className='bg-danger m-2 rounded p-2 text-center'>Error: {error}</p>}
-          <ProductFormOptions 
-            options={product.options}
-            models={models}
-            setModels={setModels}
-            sizes={sizes}
-            setSizes={setSizes}
-            setError={setError} 
-            notInStock={notInStock} 
-          />
+          {includesAdult 
+            ? <ProductOptionsAdult 
+                options={product.options}
+                models={models}
+                setModels={setModels}
+                sizes={sizes}
+                setSizes={setSizes}
+                setError={setError} 
+                notInStock={notInStock} 
+              />
+            : <ProductFormOptions 
+                options={product.options}
+                models={models}
+                setModels={setModels}
+                sizes={sizes}
+                setSizes={setSizes}
+                setError={setError} 
+                notInStock={notInStock} 
+              />
+          }
           
           <button 
             className='btn btn-block w-75 font-weight-bold text-light' 
