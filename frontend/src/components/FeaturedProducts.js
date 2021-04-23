@@ -36,11 +36,14 @@ const FeaturedProducts = () => {
             <div className='row'>
                 {products?.slice(0,4).map(product => <ProductCol key={product.id} product={product} />)}
             </div>
-            <div className='d-flex flex-row'>
+            <div className='row'>
                 {products?.slice(4,8).map(product => <ProductCol key={product.id} product={product} />)}
             </div>
-            <div className='d-flex flex-row'>
+            <div className='row'>
                 {products?.slice(8,12).map(product => <ProductCol key={product.id} product={product} />)}
+            </div>
+            <div className='row'>
+                {products?.slice(12,16).map(product => <ProductCol key={product.id} product={product} />)}
             </div>
         </div>
     )
