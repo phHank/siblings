@@ -31,7 +31,7 @@ const ADD_ITEM_MUTATION = gql`
   }
 `
 
-const ProductSelectForm = ({notInStock, product, includesAdult}) => {
+const ProductSelectForm = ({notInStock, product, isPair}) => {
     const [models, setModels] = useState(['', '', '', ''])
     const [sizes, setSizes] = useState([null, null, null, null])
     const [error, setError] = useState('')
@@ -70,8 +70,8 @@ const ProductSelectForm = ({notInStock, product, includesAdult}) => {
           <SizeGuide />
 
           {error && <p className='bg-danger m-2 rounded p-2 text-center'>Error: {error}</p>}
-          {includesAdult 
-            ? <ProductOptionsAdult 
+          {isPair
+            ? <ProductFormOptions 
                 options={product.options}
                 models={models}
                 setModels={setModels}
@@ -80,7 +80,7 @@ const ProductSelectForm = ({notInStock, product, includesAdult}) => {
                 setError={setError} 
                 notInStock={notInStock} 
               />
-            : <ProductFormOptions 
+            : <ProductOptionsAdult 
                 options={product.options}
                 models={models}
                 setModels={setModels}

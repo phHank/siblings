@@ -18,11 +18,6 @@ query GetProductQuery ($id: Int!) {
         title
         description
         inStock
-        categories {
-            category {
-                name
-            }
-        }
         price {
             inclTax
             currency
@@ -66,9 +61,10 @@ const ProductDetail = () => {
  
     const {product} = data
 
-    const includesAdultItem = product.categories.some(({category}) => (
-        category.name.toLowerCase().includes('mamá')
-        || category.name.toLowerCase().includes('papá')
+    const isPair = product.options.some(({name}) => (
+        name.toLowerCase().includes('izquierda')
+        || name.toLowerCase().includes('derecha')
+        || ['a', 'b', 'c', 'd'].includes(name.toLowerCase())
     ))
     
     const multiBuy = [,, 'por par', 'por tres', 'por cuatro']
@@ -95,7 +91,7 @@ const ProductDetail = () => {
                     <ProductSelectForm 
                       notInStock={product.inStock < 0} 
                       product={product} 
-                      includesAdult={includesAdultItem}
+                      isPair={isPair}
                     />
 
                     {parser(product.description)}

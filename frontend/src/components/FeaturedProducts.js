@@ -33,18 +33,29 @@ const FeaturedProducts = () => {
 
     return (
         <div style={{width: '125%'}}>
-            <div className='row'>
-                {products?.slice(0,4).map(product => <ProductCol key={product.id} product={product} />)}
+
+            <div>
+                <h4 className='ml-3'>Nuevos Modelos:</h4>
+                <div className='row'>
+                    {products?.slice(0,4).map(product => <ProductCol key={product.id} product={product} />)}
+                </div>
             </div>
-            <div className='row'>
-                {products?.slice(4,8).map(product => <ProductCol key={product.id} product={product} />)}
+
+            <hr/>
+
+            <div className='mt-3'>
+                <h4 className='ml-3'>Modelos Populares:</h4>
+                <div className='row'>
+                    {products?.slice(4,8).map(product => <ProductCol key={product.id} product={product} />)}
+                </div>
+                <div className='row'>
+                    {products?.slice(8,12).map(product => <ProductCol key={product.id} product={product} />)}
+                </div>
+                <div className='row'>
+                    {products?.slice(12,16).map(product => <ProductCol key={product.id} product={product} />)}
+                </div>
             </div>
-            <div className='row'>
-                {products?.slice(8,12).map(product => <ProductCol key={product.id} product={product} />)}
-            </div>
-            <div className='row'>
-                {products?.slice(12,16).map(product => <ProductCol key={product.id} product={product} />)}
-            </div>
+        
         </div>
     )
 }
