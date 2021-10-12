@@ -14,8 +14,10 @@ The app was built and tested with:
 - `$ pip install -r requirements.txt` *Recommneded* use a virtual environment!
 - `$ npm install`
 - `$ npm run dev` *NB* Start the Frontend before starting the backend for initial start up
-- In a seperate console window `$ python manage.py runserver`
-- go to http://localhost:8000/ to test the GUI. 
+- In a seperate console window `$ python manage.py migrate && python manage.py runserver`
+- go to http://localhost:8000/ to test the GUI.
+
+- [Django-Oscar's quick start guide and customisations can be found here](https://django-oscar.readthedocs.io/en/3.0.0/internals/getting_started.html#initial-data)
 
 
 # Automated Testing

@@ -161,9 +161,6 @@ Thumbs.db #thumbnail cache on Windows
 #vscode
 .vscode/
 
-# migrations
-migrations/
-
 ### react ###
 .DS_*
 *.log
